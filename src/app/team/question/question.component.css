@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+  }
+  
+  .card {
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .card-header {
+    font-size: 24px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    font-size: 18px;
+    color: aliceblue;
+    background-color: rgb(115, 115, 201);
+    width: 100%;
+  }
+  

@@ -1,0 +1,23 @@
+<div class="container mt-5">
+    <div>
+        <div>
+            <!-- <div>
+                <div class="loaded-content" [class.blurred]="showSpinner">
+                  <ng-content></ng-content>
+                </div>
+              </div>
+        </div> -->
+
+            <div>
+                <circle-progress [percent]="100" [radius]="100" [outerStrokeWidth]="16" [innerStrokeWidth]="8"
+                    [outerStrokeColor]="'#78C000'" [innerStrokeColor]="'#C7E596'" [animation]="true"
+                    [animationDuration]="1000"></circle-progress>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary mt-3" (click)="navigateToNext()">Next</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>

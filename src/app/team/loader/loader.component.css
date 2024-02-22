@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    color: rgb(216, 225, 232);
+  }
+  
+  .card {
+    width: 300px;
+    color: aliceblue;
+  }
+  
+  .spinner-container {
+    margin-top: 20px;
+    color: aqua;
+  }
+  .btn {
+    font-size: 40px;
+    color: aliceblue;
+    background-color: rgb(115, 115, 201);
+    width: 100%;
+
+  }
