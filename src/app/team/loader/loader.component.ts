@@ -24,7 +24,6 @@ export class LoaderComponent {
   }
 
   navigateToNext() {
-    debugger;
     const { activity_id, question_id, team_id, stage } = this.getStoredValues();
     const data = {
       activity_id,
@@ -38,21 +37,23 @@ export class LoaderComponent {
 
 
 
-       if(stage != 1){
-         this.currentStage = Number(localStorage.getItem('stage'));
-        let newstage = this.currentStage + 1;
+      //  if(stage != 1){
+      //    this.currentStage = Number(localStorage.getItem('stage'));
+         let newstage = this.currentStage + 1;
 
         let data: any = {
           'activity_code': localStorage.getItem('activity_code'),
           'team_name': localStorage.getItem('team_name'),
-          'stage': newstage
+          // 'stage': newstage
         }
-        localStorage.clear();
+//        localStorage.clear();
         this.service.getQuestion(data).subscribe(
           (result) => {
             if(result.status==true){
-            localStorage.setItem('question', JSON.stringify(result));
-            localStorage.setItem('stage', newstage);
+              localStorage.setItem('question', JSON.stringify(result.question[0].question));
+              localStorage.setItem('question_id', (result.question[0].question_id));
+              localStorage.setItem('stage', newstage);
+            
            // localStorage.setItem('question',result.question[0]['question']);
             this.router.navigate(['/question']);
             this.toastr.success(result.msg);
@@ -66,20 +67,20 @@ export class LoaderComponent {
           }
         );
        
-       }
-          this.service.getQuestion(data).subscribe(
-            (result) => {
-              localStorage.setItem('question', JSON.stringify(result));
-              //this.currentStage = newstage;
-              //  this.router.navigate(['/next_page']);
+       
+          // this.service.getQuestion(data).subscribe(
+          //   (result) => {
+          //     localStorage.setItem('question', JSON.stringify(result));
+          //     //this.currentStage = newstage;
+          //     //  this.router.navigate(['/next_page']);
 
-              this.router.navigate(['/question']);
-              this.toastr.success(response.msg);
-              localStorage.removeItem('question');
-              localStorage.removeItem('stage');
-              localStorage.removeItem('activity_code'); 
+          //     this.router.navigate(['/question']);
+          //     this.toastr.success(response.msg);
+          //     localStorage.removeItem('question');
+          //     localStorage.removeItem('stage');
+          //     localStorage.removeItem('activity_code'); 
               
-            });
+          //   });
         }
         if (response.flag == 2) {
           this.router.navigate(['/question']);
@@ -93,7 +94,6 @@ export class LoaderComponent {
         }
       },
       (error) => {
-        debugger;
         console.error('Failed to submit answer', error);
         this.toastr.error(error.msg);
       }
@@ -101,18 +101,17 @@ export class LoaderComponent {
   }
 
   private getStoredValues() {
-    debugger;
     const storedQuestionsString = localStorage.getItem('question');
     if (storedQuestionsString !== null) {
       const storedQuestions: any = JSON.parse(storedQuestionsString);
       console.log('Stored Questions:', storedQuestions);
 
       this.currentStage = Number(localStorage.getItem('stage'));
-      let newstage = this.currentStage + 1;
+      let newstage = this.currentStage;
       return {
-        activity_id: storedQuestions.question[0].activity_id,
-        question_id: Number(storedQuestions.question[0].id) + 1,
-        team_id: storedQuestions.question[0].team_id,
+        activity_id:localStorage.getItem('activity_id'),
+        question_id: Number(localStorage.getItem('question_id')),
+        team_id: localStorage.getItem('team_id'),
         stage: newstage,
 
       };
@@ -125,7 +124,6 @@ export class LoaderComponent {
 
 
   nextPage() {
-debugger;
     const { activity_id, question_id, team_id, stage } = this.getStoredValues();
     const data = {
       activity_id,
@@ -145,7 +143,7 @@ debugger;
             let data: any = {
               'activity_code': localStorage.getItem('activity_code'),
               'question_id': localStorage.getItem('question_id'),
-              'team_name': localStorage.getItem('team_name'),
+              'team_name': localStorage.getItem('team_id'),
               'stage': newstage
             }
             this.service.getQuestion(data).subscribe(

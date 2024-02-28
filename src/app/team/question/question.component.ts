@@ -23,7 +23,6 @@ export class QuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
   //  this.nextPage();
   
     // If the value is a string, directly assign it to the 'question' variable
@@ -40,7 +39,6 @@ export class QuestionComponent implements OnInit {
   }
 
   submitAnswer() {
-    debugger;
     if (this.answerForm.valid) {
       const { activity_id, question_id, team_id, stage } = this.getStoredValues();
 
@@ -69,33 +67,53 @@ export class QuestionComponent implements OnInit {
 
   }
 
+  // private getStoredValues() {
+  //   debugger;
+  //   const storedQuestionsString = localStorage.getItem('question');
+  //   if (storedQuestionsString !== null) {
+  //     const storedQuestions: any = JSON.parse(storedQuestionsString);
+  //     console.log('Stored Questions:', storedQuestions);
+  //     let currentStage = Number(localStorage.getItem('stage')); // Replace with your actual mechanism to track the stage
+  //     if (storedQuestions.question.length > currentStage) {
+  //       currentStage++;
+  //     }
+  //     return {
+  //       activity_id: storedQuestions.question[0].activity_id,
+  //       question_id: storedQuestions.question[0].id,
+  //       team_id: storedQuestions.question[0].team_id,
+  //       stage: currentStage,
+  //     };
+
+  //   } else {
+  //     //  console.error('No questions found in localStorage');
+  //     this.toastr.error("No questions found in localStorage");
+  //     return {}; // Return a default value or handle the error appropriately
+  //   }
+  // }
   private getStoredValues() {
-    debugger;
     const storedQuestionsString = localStorage.getItem('question');
     if (storedQuestionsString !== null) {
       const storedQuestions: any = JSON.parse(storedQuestionsString);
       console.log('Stored Questions:', storedQuestions);
-      let currentStage = Number(localStorage.getItem('stage')); // Replace with your actual mechanism to track the stage
-      if (storedQuestions.question.length > currentStage) {
-        currentStage++;
-      }
-      return {
-        activity_id: storedQuestions.question[0].activity_id,
-        question_id: storedQuestions.question[0].id,
-        team_id: storedQuestions.question[0].team_id,
-        stage: currentStage,
-      };
 
+      this.currentStage = Number(localStorage.getItem('stage'));
+    //  let newstage = this.currentStage + 1;
+      return {
+        activity_id:localStorage.getItem('activity_id'),
+        question_id: Number(localStorage.getItem('question_id')),
+        team_id: localStorage.getItem('team_id'),
+        stage: this.currentStage,
+
+      };
     } else {
-      //  console.error('No questions found in localStorage');
-      this.toastr.error("No questions found in localStorage");
+      console.error('No questions found in localStorage');
+      this.toastr.error('No questions found in localStorage');
       return {}; // Return a default value or handle the error appropriately
     }
   }
 
 
   nextPage() {
-    debugger;
     const { activity_id, team_id, stage } = this.getStoredValues();
     const data = {
       activity_id,

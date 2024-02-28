@@ -29,22 +29,28 @@ export class LoginComponent {
   }
 
   login() {
-    debugger;
     if (this.loginForm.valid) {
       const { teamId, activityId } = this.loginForm.value;
       let data: any = {
         'activity_code': this.loginForm.value["activityId"],
         'team_name': this.loginForm.value["teamId"],
-        'stage': 1
+        // 'stage': 1
       }
       this.service.getQuestion(data).subscribe(
         (result) => {
           if(result.status==true){
             localStorage.setItem('question', JSON.stringify(result.question[0].question));
-            localStorage.setItem('questions', JSON.stringify({activity_id: result.question[0].activity_id,
-              team_id: result.question[0].team_id,stage: '1'
-            }));
-            localStorage.setItem('stage', '1');
+            localStorage.setItem('activity_id', result.question[0].activity_id);
+            localStorage.setItem('team_id', result.question[0].team_id);
+            localStorage.setItem('team_name', result.question[0].team_code);
+            localStorage.setItem('stage', result.stage);
+            localStorage.setItem('question_id', result.question[0].question_id);
+            localStorage.setItem('activity_code',result.question[0].activity_code);
+            
+            // localStorage.setItem('otherDetails', JSON.stringify({activity_id: result.question[0].activity_id,
+            //   team_id: result.question[0].team_id,stage: '1'
+            // }));
+          //  localStorage.setItem('stage', '1');
           this.router.navigate(['/question']);
           this.toastr.success(result.msg);
           }
