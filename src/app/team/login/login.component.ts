@@ -17,8 +17,7 @@ export class LoginComponent {
   loginForm!: FormGroup
   data: any;
 
-
-  constructor(public service: UserService, private router: Router,private toastr :ToastService) {
+  constructor(public service: UserService, private router: Router, private toastr: ToastService) {
     this.loginForm = new FormGroup({
       teamId: new FormControl('', Validators.required),
       activityId: new FormControl('', Validators.required)
@@ -29,7 +28,6 @@ export class LoginComponent {
   }
 
   login() {
-    debugger;
     if (this.loginForm.valid) {
       const { teamId, activityId } = this.loginForm.value;
       let data: any = {
@@ -39,14 +37,17 @@ export class LoginComponent {
       }
       this.service.getQuestion(data).subscribe(
         (result) => {
-          if(result.status==true){
-            localStorage.setItem('question', JSON.stringify(result.question[0].question));
-            localStorage.setItem('questions', JSON.stringify({activity_id: result.question[0].activity_id,
-              team_id: result.question[0].team_id,stage: '1'
-            }));
+          if (result.status == true) {
+            localStorage.setItem('question', JSON.stringify(result));
+            // localStorage.setItem('question', JSON.stringify(result.question[0].question));
+            // localStorage.setItem('questions', JSON.stringify({activity_id: result.question[0].activity_id,
+            //   team_id: result.question[0].team_id,stage: '1'
+            // }));
             localStorage.setItem('stage', '1');
-          this.router.navigate(['/question']);
-          this.toastr.success(result.msg);
+            localStorage.setItem('team_name', teamId);
+            localStorage.setItem('activity_code', activityId);
+            this.router.navigate(['/question']);
+            this.toastr.success(result.msg);
           }
         },
         (error) => {
@@ -58,10 +59,9 @@ export class LoginComponent {
   }
 
   // login() {
-  //   debugger;
   //   if (this.loginForm.valid) {
   //     const { teamId, activityId } = this.loginForm.value;
-      
+
   //     let data: any = {
   //       'activity_code': this.loginForm.value["activityId"],
   //       'team_name': this.loginForm.value["teamId"],

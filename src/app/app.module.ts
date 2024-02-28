@@ -12,12 +12,14 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ToastrModule } from 'ngx-toastr';
 import { UserService } from './service/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CompleteComponent } from './team/complete/complete.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     QuestionComponent,
-    LoaderComponent
+    LoaderComponent,
+    CompleteComponent
   ],
   imports: [
     BrowserModule,
