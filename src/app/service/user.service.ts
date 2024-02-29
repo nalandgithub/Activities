@@ -14,7 +14,6 @@ export class UserService {
 
 
   loginUser(teamId: string, activityId: string): Observable<any> {
-    debugger;
    // const url = `${this.apiUrl}/login`;
     return this.http.post(this.apiUrl, {teamId,activityId});
   }
